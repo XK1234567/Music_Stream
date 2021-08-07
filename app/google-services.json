@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "629873705119",
+    "project_id": "music-stream-9e1b6",
+    "storage_bucket": "music-stream-9e1b6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:629873705119:android:4021d4a0c1c175e8f122aa",
+        "android_client_info": {
+          "package_name": "tp.edu.musicstream"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "629873705119-tgff4viopu4o6t0s97rivh5at43pe3g8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCA3NxCb8ENrOjLyWTJWvwmOxqAYA3Tw50"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "629873705119-tgff4viopu4o6t0s97rivh5at43pe3g8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
