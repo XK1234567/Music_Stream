@@ -94,6 +94,28 @@ public class SongCollection {
         }
     }
 
+    public int getNextSongRepeat(int currentSongIndex)
+    {
+        if(currentSongIndex == songs.length-1)
+        {
+            return currentSongIndex -6;
+        }
+        else{
+            return currentSongIndex +1 ;
+        }
+    }
+
+    public int getPrevSongRepeat(int currentSongIndex)
+    {
+        if(currentSongIndex <= 0)
+        {
+            return currentSongIndex +6;
+        }
+        else{
+            return currentSongIndex -1 ;
+        }
+    }
+
     public int getPrevSong(int currentSongIndex)
     {
         if(currentSongIndex <= 0)

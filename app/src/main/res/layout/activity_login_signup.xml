@@ -12,16 +12,17 @@
         android:id="@+id/txtWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Welcome Back"
         android:textColor="#FFFFFF"
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintHorizontal_bias="0.176"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.052" />
+        app:layout_constraintVertical_bias="0.004" />
 
     <ImageButton
         android:id="@+id/SignUp"
@@ -49,18 +50,16 @@
         app:layout_constraintVertical_bias="0.95"
         app:srcCompat="@drawable/haveacc" />
 
-    <ImageButton
-        android:id="@+id/imgLogo"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:background="#262626"
-        android:scaleType="centerCrop"
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="36dp"
         app:layout_constraintBottom_toTopOf="@+id/SignUp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.299"
-        app:srcCompat="@drawable/logo_black" />
+        app:layout_constraintTop_toBottomOf="@+id/txtWelcome"
+        app:srcCompat="@drawable/front1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,11 +8,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
+import java.lang.reflect.Array;
+
 public class StudyPlaylist extends AppCompatActivity {
 
-    private ImageButton buttonHome;
-    private ImageButton buttonSearch;
-    private ImageButton buttonPlaylist;
+    ImageButton btnHome;
+    ImageButton btnSearch;
+    ImageButton btnPlaylist;
     SongCollection songCollection = new SongCollection();
 
     @Override
@@ -20,43 +22,46 @@ public class StudyPlaylist extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_study_playlist);
 
-        buttonHome = (ImageButton) findViewById(R.id.TaskbarHome);
-        buttonHome.setOnClickListener(new View.OnClickListener() {
+        btnHome = (ImageButton) findViewById(R.id.TaskbarHome);
+        btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openHome();
             }
         });
-        buttonSearch = (ImageButton) findViewById(R.id.TaskbarSearch);
-        buttonSearch.setOnClickListener(new View.OnClickListener() {
+        btnSearch = (ImageButton) findViewById(R.id.TaskbarSearch);
+        btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openSearch();
             }
         });
-        buttonPlaylist = (ImageButton) findViewById(R.id.TaskbarPlaylist);
-        buttonPlaylist.setOnClickListener(new View.OnClickListener() {
+        btnPlaylist = (ImageButton) findViewById(R.id.TaskbarPlaylist);
+        btnPlaylist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openPlaylist();
+                openPlaylists();
             }
         });
-
     }
 
-    public void openHome() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
-    public void openSearch() {
-        Intent intent = new Intent(this, SearchPage.class);
-        startActivity(intent);
-    }
-    public void openPlaylist() {
-        Intent intent = new Intent(this, PlaylistPage.class);
+    public void openHome()
+    {
+        Intent intent = new Intent(StudyPlaylist.this, MainActivity.class);
         startActivity(intent);
     }
 
+    public void openSearch()
+    {
+        Intent intent = new Intent(StudyPlaylist.this, SearchPage.class);
+        startActivity(intent);
+    }
+
+    public void openPlaylists()
+    {
+        Intent intent = new Intent(StudyPlaylist.this, PlaylistPage.class);
+        startActivity(intent);
+    }
 
     public void sendDataToActivity(int index)
     {

@@ -14,6 +14,7 @@ public class NewUserHome extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_user_home);
+
     }
 
     public void logout(View view) {

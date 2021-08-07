@@ -7,6 +7,22 @@
     android:background="#262626"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/btnLogOut2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="7dp"
+        android:onClick="logout"
+        android:text="Log out"
+        app:layout_constraintBottom_toTopOf="@+id/txtRecently"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvWelcome"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
     <ImageButton
         android:id="@+id/imgTaskbar2"
         android:layout_width="414dp"
@@ -70,12 +86,13 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="0.00999999" />
 
     <TextView
         android:id="@+id/txtRecently"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Recently Played"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
@@ -83,18 +100,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.118"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.120000005" />
+        app:layout_constraintTop_toBottomOf="@+id/tvWelcome"
+        app:layout_constraintVertical_bias="0.0" />
 
     <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
         android:layout_width="417dp"
-        android:layout_height="180dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.26999998">
+        app:layout_constraintTop_toBottomOf="@+id/txtRecently"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
@@ -102,9 +121,11 @@
 
             <ImageButton
                 android:id="@+id/btnStudy"
-                android:layout_width="181dp"
-                android:layout_height="181dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_marginStart="120dp"
+                android:background="#262626"
+                android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -112,9 +133,11 @@
 
             <ImageButton
                 android:id="@+id/btnChill"
-                android:layout_width="181dp"
-                android:layout_height="181dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_marginStart="60dp"
+                android:background="#262626"
+                android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/btnStudy"
                 app:layout_constraintTop_toTopOf="@id/btnStudy"
@@ -122,10 +145,12 @@
 
             <ImageButton
                 android:id="@+id/btnSchool"
-                android:layout_width="181dp"
-                android:layout_height="181dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_marginStart="60dp"
                 android:layout_marginEnd="120dp"
+                android:background="#262626"
+                android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/btnChill"
@@ -133,5 +158,95 @@
                 app:srcCompat="@drawable/school" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </HorizontalScrollView>
+
+    <ImageButton
+        android:id="@+id/imgNewPlaylist"
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:background="#262626"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.101"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
+        app:layout_constraintVertical_bias="0.029999971"
+        app:srcCompat="@drawable/new_playlist" />
+
+    <ImageButton
+        android:id="@+id/btnGrpListen"
+        android:layout_width="413dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:background="#262626"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/imgTaskbar2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgNewPlaylist"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/grp_listen" />
+
+    <ImageButton
+        android:id="@+id/btnPlaylists"
+        android:layout_width="413dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:background="#262626"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/imgTaskbar2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnGrpListen"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/my_playlist" />
+
+    <ImageButton
+        android:id="@+id/btnFavourites"
+        android:layout_width="413dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:background="#262626"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/imgTaskbar2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnPlaylists"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/favourites" />
+
+    <ImageButton
+        android:id="@+id/btnTopTracks"
+        android:layout_width="413dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:background="#262626"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/imgTaskbar2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnFavourites"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/top_tracks" />
+
+    <ImageButton
+        android:id="@+id/search"
+        android:layout_width="47dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginBottom="4dp"
+        android:background="#262626"
+        app:layout_constraintBottom_toBottomOf="@+id/tvWelcome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.904"
+        app:layout_constraintStart_toEndOf="@+id/tvWelcome"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.842"
+        app:srcCompat="@drawable/ic_search" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

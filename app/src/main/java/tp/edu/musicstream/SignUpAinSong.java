@@ -97,6 +97,7 @@ public class SignUpAinSong extends AppCompatActivity {
     public void Cancel() {
         Intent intent = new Intent(this, LoginSignup.class);
         startActivity(intent);
+        finish();
     }
 
 }

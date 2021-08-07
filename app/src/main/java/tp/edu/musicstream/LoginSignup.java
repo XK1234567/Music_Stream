@@ -38,6 +38,14 @@ public class LoginSignup extends AppCompatActivity {
 
     }
 
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        Intent intent = new Intent(LoginSignup.this, LoginSignup.class);
+        startActivity(intent);
+        finish();
+    }
+
     public void openSignup() {
         Intent intent = new Intent(this, SignUpAinSong.class);
         startActivity(intent);

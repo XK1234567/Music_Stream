@@ -24,10 +24,6 @@ import java.util.concurrent.TimeUnit;
 
 public class PlaySongActivity extends AppCompatActivity {
 
-    private ImageButton buttonHome;
-    private ImageButton buttonSearch;
-    private ImageButton buttonPlaylist;
-
     private String title = "";
     private String artiste = "";
     private String fileLink = "";
@@ -36,10 +32,11 @@ public class PlaySongActivity extends AppCompatActivity {
 
     private MediaPlayer player = new MediaPlayer();
     private ImageButton btnPlaySong = null;
-    SeekBar seekBar;
-    Handler handler = new Handler();
     private SongCollection songCollection = new SongCollection();
     private SongCollection originalSongCollection = new SongCollection();
+
+    SeekBar seekbar;
+    Handler handler = new Handler();
 
     List<Song> shuffleList = Arrays.asList(songCollection.songs);
 
@@ -48,32 +45,23 @@ public class PlaySongActivity extends AppCompatActivity {
     ImageButton btnShuffle;
     Boolean shuffleFlag = false;
 
+    ImageButton btnHome;
+    ImageButton btnSearch;
+    ImageButton btnPlaylist;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_song);
 
-        /*buttonHome = (ImageButton) findViewById(R.id.TaskbarHome);
-        buttonHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openHome();
-            }
-        });
-        buttonSearch = (ImageButton) findViewById(R.id.TaskbarSearch);
-        buttonSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openSearch();
-            }
-        });
-        buttonPlaylist = (ImageButton) findViewById(R.id.TaskbarPlaylist);
-        buttonPlaylist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openPlaylist();
-            }
-        });*/
+        btnHome = findViewById(R.id.taskbarHome);
+        btnHome.setOnClickListener(view -> openHome());
+
+        btnSearch = findViewById(R.id.taskbarSearch);
+        btnSearch.setOnClickListener(view -> openSearch());
+
+        btnPlaylist = findViewById(R.id.taskbarPlaylist);
+        btnPlaylist.setOnClickListener(view -> openPlaylists());
 
         btnPlaySong = findViewById(R.id.btnPlaySong);
         Bundle songData = this.getIntent().getExtras();
@@ -82,14 +70,14 @@ public class PlaySongActivity extends AppCompatActivity {
         displaySongBasedOnIndex(currentIndex);
         playSong(fileLink);
 
-        seekBar = findViewById(R.id.seekBar);
-        seekBar.setMax(player.getDuration());
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        btnRepeat = findViewById(R.id.btnRepeat);
+        btnShuffle = findViewById(R.id.btnShuffle);
+
+        seekbar = findViewById(R.id.seekBar);
+        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (fromUser) {
-                    player.seekTo(progress);
-                }
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+
             }
 
             @Override
@@ -99,35 +87,59 @@ public class PlaySongActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
+                if (player != null && player.isPlaying()){
+                    player.seekTo(seekBar.getProgress());
+                }
             }
         });
-
-        btnRepeat = findViewById(R.id.btnRepeat);
-        btnShuffle = findViewById(R.id.btnShuffle);
     }
 
-    public void openHome() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
-    public void openSearch() {
-        Intent intent = new Intent(this, SearchPage.class);
-        startActivity(intent);
-    }
-    public void openPlaylist() {
-        Intent intent = new Intent(this, PlaylistPage.class);
-        startActivity(intent);
-    }
-
-
-    public class UpdateSeekBar implements Runnable {
+    Runnable p_bar = new Runnable() {
         @Override
         public void run() {
-            seekBar.setProgress(player.getCurrentPosition());
-
-            handler.postDelayed(this, 100);
+            if (player != null && player.isPlaying()){
+                seekbar.setProgress(player.getCurrentPosition());
+                seekbar.setMax(player.getDuration());
+            }
+            handler.removeCallbacks(p_bar);
+            handler.postDelayed(p_bar, 100);
         }
+    };
+
+    public void openHome()
+    {
+        if(player != null) {
+            handler.removeCallbacks(p_bar);
+            player.stop();
+            player.release();
+            player = null;
+        }
+        Intent intent = new Intent(PlaySongActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void openSearch()
+    {
+        if(player != null) {
+            handler.removeCallbacks(p_bar);
+            player.stop();
+            player.release();
+            player = null;
+        }
+        Intent intent = new Intent(PlaySongActivity.this, SearchPage.class);
+        startActivity(intent);
+    }
+
+    public void openPlaylists()
+    {
+        if(player != null) {
+            handler.removeCallbacks(p_bar);
+            player.stop();
+            player.release();
+            player = null;
+        }
+        Intent intent = new Intent(PlaySongActivity.this, PlaylistPage.class);
+        startActivity(intent);
     }
 
     public void displaySongBasedOnIndex(int selectedIndex)
@@ -157,10 +169,10 @@ public class PlaySongActivity extends AppCompatActivity {
             player.start();
             gracefullyStopsWhenMusicEnds();
 
+            handler.postDelayed(p_bar, 100);
+
             btnPlaySong.setImageResource(R.drawable.ic_pausebtn);
             setTitle(title);
-            UpdateSeekBar updateSeekBar = new UpdateSeekBar();
-            handler.post(updateSeekBar);
         }
         catch(IOException e)
         {
@@ -174,6 +186,10 @@ public class PlaySongActivity extends AppCompatActivity {
         {
             player.pause();
             btnPlaySong.setImageResource(R.drawable.ic_playbtn);
+
+            seekbar.setMax(player.getDuration());
+            handler.removeCallbacks(p_bar);
+            handler.postDelayed(p_bar, 100);
         }
         else
         {
@@ -196,9 +212,7 @@ public class PlaySongActivity extends AppCompatActivity {
                     currentIndex = songCollection.getNextSong(currentIndex);
                     displaySongBasedOnIndex(currentIndex);
                     playSong(fileLink);
-                }/*else{
-                    btnPlaySong.setImageResource(R.drawable.ic_playbtn);
-                }*/
+                }
 
                 if (repeatFlag)
                 {
@@ -206,11 +220,7 @@ public class PlaySongActivity extends AppCompatActivity {
                     currentIndex = songCollection.getNextSong(currentIndex);
                     displaySongBasedOnIndex(currentIndex);
                     playSong(fileLink);
-                }/*else{
-                    Toast.makeText(getBaseContext(), "The song had ended and the onCompleteListener is activated\n" +
-                            "The button text is changed to 'PLAY", Toast.LENGTH_LONG).show();
-                    btnPlaySong.setImageResource(R.drawable.ic_playbtn);
-                }*/
+                }
 
                 currentIndex = songCollection.getNextSong(currentIndex);
                 displaySongBasedOnIndex(currentIndex);
@@ -221,28 +231,61 @@ public class PlaySongActivity extends AppCompatActivity {
 
     public void playNext(View view)
     {
-        currentIndex = songCollection.getNextSong(currentIndex);
+        /*currentIndex = songCollection.getNextSong(currentIndex);
         Toast.makeText(this, "After clicking playNext,\nthe current index of this song\n" +
                 "in the SongCollection array is now: " + currentIndex, Toast.LENGTH_LONG).show();
         Log.d("temasek", "After playNext, the index is now: " + currentIndex);
         displaySongBasedOnIndex(currentIndex);
-        playSong(fileLink);
+        playSong(fileLink);*/
+
+        if (repeatFlag){
+            currentIndex = songCollection.getNextSongRepeat(currentIndex);
+            displaySongBasedOnIndex(currentIndex);
+            playSong(fileLink);
+        }
+        else{
+            currentIndex = songCollection.getNextSong(currentIndex);
+            Toast.makeText(this, "After clicking playNext,\nthe current index of this song\n" +
+                    "in the SongCollection array is now: " + currentIndex, Toast.LENGTH_LONG).show();
+            Log.d("temasek", "After playNext, the index is now: " + currentIndex);
+            displaySongBasedOnIndex(currentIndex);
+            playSong(fileLink);
+        }
     }
 
     public void playPrev(View view)
     {
-        currentIndex = songCollection.getPrevSong(currentIndex);
+        /*currentIndex = songCollection.getPrevSong(currentIndex);
         Toast.makeText(this, "After clicking playPrevious,\nthe current index of this song\n" +
                 "in the SongCollection array is now: " + currentIndex, Toast.LENGTH_LONG).show();
         Log.d("temasek", "After playPrevious, the index is now: " + currentIndex);
         displaySongBasedOnIndex(currentIndex);
-        playSong(fileLink);
+        playSong(fileLink);*/
+
+        if (repeatFlag){
+            currentIndex = songCollection.getPrevSongRepeat(currentIndex);
+            displaySongBasedOnIndex(currentIndex);
+            playSong(fileLink);
+        }
+        else{
+            currentIndex = songCollection.getPrevSong(currentIndex);
+            Toast.makeText(this, "After clicking playPrevious,\nthe current index of this song\n" +
+                    "in the SongCollection array is now: " + currentIndex, Toast.LENGTH_LONG).show();
+            Log.d("temasek", "After playPrevious, the index is now: " + currentIndex);
+            displaySongBasedOnIndex(currentIndex);
+            playSong(fileLink);
+        }
     }
 
     public void onBackPressed()
     {
         super.onBackPressed();
-        player.release();
+        if(player != null) {
+            handler.removeCallbacks(p_bar);
+            player.stop();
+            player.release();
+            player = null;
+        }
     }
 
     public void repeatSong(View view) {
@@ -271,7 +314,6 @@ public class PlaySongActivity extends AppCompatActivity {
             shuffleList.toArray(songCollection.songs);
         }
         shuffleFlag = !shuffleFlag;
-
     }
 
 }
